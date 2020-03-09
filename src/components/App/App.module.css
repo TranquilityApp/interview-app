@@ -1,0 +1,9 @@
+.app {
+  text-align: center;
+}
+
+.header {
+  background-color: #222;
+  color: white;
+  padding: 1.25rem 0;
+}
