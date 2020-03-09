@@ -1,25 +1,28 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-import ItemForm from './ItemForm';
-import ItemList from './ItemList';
+import TodoInput from "./TodoInput";
+import TodoList from "./TodoList";
+
+import styles from "./Todo.module.css";
 
 const addItem = item => {
   return dispatch => {
-    dispatch({ type: 'ADD_NEW_ITEM', item });
+    dispatch({ type: "ADD_NEW_ITEM", item });
   };
 };
 
 const editItem = item => {
   return dispatch => {
-    dispatch({ type: 'EDIT_ITEM', item });
+    dispatch({ type: "EDIT_ITEM", item });
   };
 };
 
 const removeItem = id => {
   return dispatch => {
     dispatch({
-      type: 'REMOVE_ITEM',
+      type: "REMOVE_ITEM",
       id: id
     });
   };
@@ -30,12 +33,6 @@ class Todos extends Component {
     items: PropTypes.array.isRequired
   };
 
-  constructor() {
-    super();
-
-    // this.state = { editItem: null }
-  }
-
   onNewItemSubmited = item => {
     this.props.dispatch(addItem(item));
   };
@@ -43,20 +40,20 @@ class Todos extends Component {
   onEditItemSubmited = item => {
     this.props.dispatch(editItem(item));
     this.props.dispatch({
-      type: 'FINISH_EDIT_ITEM'
+      type: "FINISH_EDIT_ITEM"
     });
   };
 
   toggleItemCompletion = id => {
     this.props.dispatch({
-      type: 'TOGGLE_ITEM_COMPLETION',
+      type: "TOGGLE_ITEM_COMPLETION",
       id: id
     });
   };
 
   startEditItem = id => {
     this.props.dispatch({
-      type: 'START_EDIT_ITEM',
+      type: "START_EDIT_ITEM",
       id: id
     });
   };
@@ -71,18 +68,18 @@ class Todos extends Component {
     })[0];
 
     return (
-      <div>
+      <div className={styles.todoContainer}>
         <div>
-          <ItemForm
+          <TodoInput
             onNewItemSubmited={this.onNewItemSubmited}
             onEditItemSubmited={this.onEditItemSubmited}
             editItem={editItem}
           />
         </div>
         <div>
-          <ItemList
+          <TodoList
             items={this.props.items}
-            onTogglComplete={this.toggleItemCompletion}
+            onToggleComplete={this.toggleItemCompletion}
             onEditItem={this.startEditItem}
             onRemoveItem={this.removeItem}
           />
